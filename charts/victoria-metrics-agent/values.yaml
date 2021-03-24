@@ -63,6 +63,11 @@ remoteWriteUrls: []
 #   - http://vm-insert:8480/insert/0/prometheus
 #   - http://prometheus:8480/insert/0/prometheus
 
+remoteWriteLabels: []
+# remoteWriteLabels:
+#   - label1=value1
+#   - label2=value2
+
 extraArgs:
   envflag.enable: "true"
   envflag.prefix: VM_
