@@ -48,6 +48,9 @@ spec:
           {{- range $key, $value := .Values.remoteWriteUrls }}
             - -remoteWrite.url={{ $value }}
           {{- end }}
+          {{- range $key, $value := .Values.remoteWriteLabels }}
+            - -remoteWrite.label={{ $value }}
+          {{- end }}
           {{- range $key, $value := .Values.extraArgs }}
             - -{{ $key }}={{ $value }}
           {{- end }}
