@@ -471,4 +471,40 @@ config:
         - source_labels: [__meta_kubernetes_pod_name]
           action: replace
           target_label: kubernetes_pod_name
-      ## End of COPY
+      
+    - job_name: 'whatsapp-svc'	
+      kubernetes_sd_configs:	
+        - role: service	
+      relabel_configs:	
+        - source_labels: [__meta_kubernetes_namespace]	
+          action: keep	
+          regex: whatsapp	
+        - source_labels: [__meta_kubernetes_service_name]	
+          action: keep	
+          regex: wa-web-\d+	
+        - source_labels: [__meta_kubernetes_service_label_customer]	
+          action: replace	
+          regex: (.*)	
+          replacement: /metrics/$1	
+          target_label: __metrics_path__	
+        - source_labels: [__meta_kubernetes_service_label_customer]	
+          action: replace	
+          regex: (.*)	
+          replacement: wa-monitor:3000	
+          target_label: __address__	
+        - source_labels: [__meta_kubernetes_service_label_customer]	
+          action: keep	
+          target_label: customer	
+        - source_labels: [__meta_kubernetes_service_label_customer_name]	
+          action: keep	
+          target_label: customer_name	
+        - action: labelmap	
+          regex: __meta_kubernetes_service_label_(.+)	
+        - source_labels: [__meta_kubernetes_namespace]	
+          action: replace	
+          target_label: kubernetes_namespace	
+        - source_labels: [__meta_kubernetes_service_name]	
+          action: replace	
+          target_label: kubernetes_service_name
+
+       ## End of COPY
